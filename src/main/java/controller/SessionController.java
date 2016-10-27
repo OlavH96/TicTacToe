@@ -2,6 +2,10 @@ package controller;
 
 import data.Opponents;
 import data.Session;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import javax.ws.rs.NotAuthorizedException;
 import repo.SessionRepository;
 
 /**
@@ -16,14 +20,28 @@ public class SessionController {
     }
     
     public Session createSession(String userName) {
-        return null; // todo
-    }
-
-    public void removeSession(String userName) {
-        // todo
+        if(repo.existsSession(userName)) {
+            throw new NotAuthorizedException("Bruker er allerede pålogget");
+        }
+        Session session = new Session();
+        session.setLoggedOn(new Date());
+        session.setUserName(userName);
+        repo.addSession(session);
+        return session;
     }
     
+    public void removeSession(String userName) {
+        repo.removeSession(userName);
+    } 
+    
     public Opponents getPossibleOpponents(String myUserName) {
-        throw null; // todo
+        Collection<String> userNames = repo.getAllUserNames();
+        Opponents opponents = new Opponents();
+        for(String userName : userNames) {
+            if(!userName.equals(myUserName)) {
+                opponents.addUserName(userName);
+            }
+        }
+        return opponents;
     }
 }

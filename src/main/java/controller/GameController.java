@@ -3,9 +3,11 @@ package controller;
 import data.Game;
 import data.Square;
 import data.Position;
+import static data.Square.e;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +65,11 @@ public class GameController {
             throw new ClientErrorException("Posisjon er ugyldig: " + x + "," + y, Response.Status.BAD_REQUEST);
         }
         
+        // Occupied square?
+        if(game.getBoard()[y][x] != e) {
+            throw new ClientErrorException("Ruta er opptatt", Response.Status.BAD_REQUEST);
+        }
+        
         GameAI ai =  new GameAI(game);
         
         // Make move
@@ -97,6 +104,14 @@ public class GameController {
     }
 
     public List<Game> getInvites(String userName) {
-        return new ArrayList<Game>(); // todo
+        Iterable<Game> allGames = repo.getAllGames();
+        List<Game> invites = new ArrayList<Game>();
+        for(Game game : allGames) {
+            if(game.getInvitee().equals(userName) && !game.isInviteAccepted() && !game.isInviteSent()) {
+                game.setInviteSent(true);
+                invites.add(game);
+            }
+        }
+        return invites;
     }
 }

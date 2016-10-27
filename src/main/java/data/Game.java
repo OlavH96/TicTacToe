@@ -14,6 +14,7 @@ public class Game implements Serializable {
     private String inviter;
     private String invitee;
     private boolean inviteAccepted = false;
+    private boolean inviteSent = false;
     private String turn;
     private String winner;
     private Square[][] board;
@@ -51,6 +52,14 @@ public class Game implements Serializable {
 
     public void setInviteAccepted(boolean inviteAccepted) {
         this.inviteAccepted = inviteAccepted;
+    }
+
+    public boolean isInviteSent() {
+        return inviteSent;
+    }
+
+    public void setInviteSent(boolean inviteSent) {
+        this.inviteSent = inviteSent;
     }
 
     public int getSquares() {
