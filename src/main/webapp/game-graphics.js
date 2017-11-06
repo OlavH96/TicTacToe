@@ -83,7 +83,6 @@ function drawBoardMarks(context, board) {
     for(x=0; x<numSquares; x++) {
         for(y=0; y<numSquares; y++) {
             clearPosition(context, {x : x, y : y});
-            console.log("x=" + x + ", y=" + y);
             var mark = board[y][x];
             if(mark === "X") {
                 drawX(context, {x : x, y : y});
