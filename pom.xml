@@ -17,7 +17,7 @@
     <scm>
         <url>https://github.com/OlavH96/TicTacToe</url>
         <connection>scm:git:https://github.com/OlavH96/TicTacToe.git</connection>
-        <tag>v1.0-SNAPSHOT</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
